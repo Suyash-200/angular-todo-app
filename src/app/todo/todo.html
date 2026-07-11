@@ -1,0 +1,119 @@
+<div class="min-h-screen bg-gray-100 py-10 px-4">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+      <h1 class="text-3xl font-bold text-gray-800">Todo Manager</h1>
+      <p class="text-gray-500 mt-1">Organize your daily tasks efficiently</p>
+    </div>
+
+    <!-- Add Todo Card -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">Add New Task</h2>
+
+      <div class="flex flex-col md:flex-row gap-4">
+        <input type="text" name="taskTitle" [(ngModel)]="newTaskTitle" placeholder="Enter task title..."
+          class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+        <select name="taskStatus" [(ngModel)]="newTaskStatus"
+          class="border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option>Completed</option>
+          <option>Not Completed</option>
+        </select>
+
+        <button   (click)="isEditMode ? updateTask() : addTask()"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition">
+          {{isEditMode ? 'Update Task' : 'Add Task'}}
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white shadow rounded-xl p-5">
+        <h3 class="text-gray-500 text-sm">Total Tasks</h3>
+        <p class="text-3xl font-bold mt-2">{{taskLists().length}}</p>
+      </div>
+
+      <div class="bg-white shadow rounded-xl p-5">
+        <h3 class="text-gray-500 text-sm">Completed</h3>
+        <p class="text-3xl font-bold text-green-600 mt-2">{{completedTasksCount()}}</p>
+      </div>
+
+      <div class="bg-white shadow rounded-xl p-5">
+        <h3 class="text-gray-500 text-sm">Pending</h3>
+        <p class="text-3xl font-bold text-red-500 mt-2">{{pendingTasksCount()}}</p>
+      </div>
+    </div>
+
+    <!-- Todo List -->
+<div class="space-y-4">
+
+  @if (taskLists().length > 0) {
+
+    @for (item of taskLists(); track item.id) {
+
+      <div class="bg-white shadow rounded-xl p-5 flex items-center justify-between hover:shadow-lg transition">
+
+        <div class="flex items-center gap-4">
+          <input
+            type="checkbox"
+            [checked]="item.complete === 'Completed'"
+            (change)="toggleComplete(item)"
+            class="w-5 h-5"
+          />
+
+          <div>
+            <h3
+              class="font-semibold text-lg capitalize"
+              [ngClass]="{
+                'line-through text-gray-400': item.complete === 'Completed',
+                'text-gray-800': item.complete === 'Not Completed'
+              }"
+            >
+              {{ item.task }}
+            </h3>
+
+            <span
+              class="inline-block mt-2 text-xs px-3 py-1 rounded-full"
+              [ngClass]="{
+                'bg-green-100 text-green-700': item.complete === 'Completed',
+                'bg-red-100 text-red-700': item.complete === 'Not Completed'
+              }"
+            >
+              {{ item.complete }}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex gap-2">
+          <button
+            (click)="editTask(item)"
+            class="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+          >
+            Edit
+          </button>
+
+          <button
+            (click)="deleteTask(item)"
+            class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+          >
+            Delete
+          </button>
+        </div>
+
+      </div>
+
+    }
+
+  } @else {
+
+    <div class="bg-white shadow rounded-xl p-8 text-center">
+      <p class="text-gray-500 text-lg">
+        No tasks found. Please add a task.
+      </p>
+    </div>
+
+  }
+
+</div>
+</div>

@@ -1,0 +1,20 @@
+{
+  "taskLists": [
+    {
+      "task": "learn angular",
+      "complete": "Completed",
+      "id": "FzVq72acOeY"
+    },
+    {
+      "task": "go gym",
+      "complete": "Not Completed",
+      "id": "tqtK_Gt3g5c"
+    },
+    {
+      "task": "work hard",
+      "complete": "Completed",
+      "id": "nIzXKvrKVhE"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
